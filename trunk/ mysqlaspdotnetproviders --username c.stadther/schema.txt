@@ -1,0 +1,121 @@
+CREATE TABLE IF NOT EXISTS `aspnet_Applications` (
+	ApplicationName varchar(255) NOT NULL,
+	LoweredApplicationName varchar(255) NOT NULL,
+	ApplicationId binary(255) NOT NULL,
+	Description varchar(255),
+PRIMARY KEY (`ApplicationId`),
+UNIQUE (`ApplicationName`, `LoweredApplicationName`)) ENGINE = InnoDB ;
+	
+CREATE TABLE IF NOT EXISTS `aspnet_Users` (
+	ApplicationId binary(255) NOT NULL,
+	UserId binary(255) NOT NULL,
+	UserName varchar(255) NOT NULL,
+	LoweredUserName varchar(255) NOT NULL,
+	MobileAlias varchar(15),
+	IsAnonymous tinyint(1) DEFAULT 0,
+	LastActivityDate datetime NOT NULL,
+PRIMARY KEY (`UserId`),
+FOREIGN KEY (`ApplicationId`) REFERENCES aspnet_Applications(`ApplicationId`)) ENGINE = InnoDB ;
+
+CREATE TABLE IF NOT EXISTS `aspnet_SchemaVersions` (
+	Feature varchar(127) NOT NULL,
+	CompatibleSchemaVersion varchar(127) NOT NULL,
+	IsCurrentVersion tinyint(1) NOT NULL,
+PRIMARY KEY (`Feature`)) ENGINE = InnoDB ;
+
+
+CREATE TABLE IF NOT EXISTS `aspnet_Membership` (
+	ApplicationId binary(255) NOT NULL,
+	UserId binary(255) NOT NULL,
+	Password varchar(127) NOT NULL,
+	PasswordFormat int(10) NOT NULL DEFAULT 0,
+	PasswordSalt varchar(127),
+	MobilePIN varchar(15),
+	Email varchar(255),
+	LoweredEmail varchar(255),
+	PasswordQuestion varchar(255),
+	PasswordAnswer varchar(127),
+	IsApproved tinyint(1) NOT NULL,
+	IsLockedOut tinyint(1) NOT NULL,
+	CreateDate datetime NOT NULL,
+	LastLoginDate datetime NOT NULL,
+	LastPasswordChangedDate datetime NOT NULL,                
+	LastLockoutDate datetime NOT NULL,                        
+	FailedPasswordAttemptCount int(10) NOT NULL,             
+	FailedPasswordAttemptWindowStart datetime NOT NULL,       
+	FailedPasswordAnswerAttemptCount int(10) NOT NULL,        
+	FailedPasswordAnswerAttemptWindowStart datetime NOT NULL, 
+	Comment text,                                 
+PRIMARY KEY (`UserId`),
+FOREIGN KEY (ApplicationId) REFERENCES aspnet_Applications(ApplicationId),
+FOREIGN KEY (UserId) REFERENCES aspnet_Users(UserId)
+) 
+ENGINE = InnoDB ;
+CREATE INDEX aspnet_Membership_index ON aspnet_Membership(ApplicationId, LoweredEmail);
+
+CREATE TABLE IF NOT EXISTS `aspnet_Roles` (
+	ApplicationId binary(255) NOT NULL,
+	RoleId binary(255) NOT NULL,
+	RoleName varchar(255) NOT NULL,
+	LoweredRoleName varchar(255) NOT NULL,
+	Description varchar(255),
+PRIMARY KEY (`RoleId`),
+FOREIGN KEY (ApplicationId) REFERENCES aspnet_Applications(ApplicationId)
+) ENGINE = InnoDB;
+CREATE INDEX aspnet_Roles_index1 ON aspnet_Roles(ApplicationId, LoweredRoleName);
+
+CREATE TABLE IF NOT EXISTS `aspnet_UsersInRoles` (
+	UserId binary(255) NOT NULL,
+	RoleId binary(255) NOT NULL,
+PRIMARY KEY (`UserId`,`RoleId`),
+FOREIGN KEY (UserId) REFERENCES aspnet_Users(UserId),
+FOREIGN KEY (RoleId) REFERENCES aspnet_Roles(RoleId)
+) ENGINE = InnoDB;
+CREATE INDEX aspnet_Roles_index1 ON aspnet_UsersInRoles(RoleId);
+
+CREATE TABLE IF NOT EXISTS `aspnet_Profile` (
+	UserId binary(255) NOT NULL,
+	PropertyNames text NOT NULL,
+	PropertyValuesString text NOT NULL,
+	PropertyValuesBinary blob NOT NULL,
+	LastUpdatedDate datetime NOT NULL,
+PRIMARY KEY (`UserId`),
+FOREIGN KEY (UserId) REFERENCES aspnet_Users(UserId)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `aspnet_Paths` (
+	ApplicationId binary(255) NOT NULL,
+	PathId binary(255) NOT NULL,
+	Path varchar(255) NOT NULL,
+	LoweredPath varchar(255) NOT NULL,
+PRIMARY KEY (`PathId`),
+FOREIGN KEY (ApplicationId) REFERENCES aspnet_Applications(ApplicationId)
+) ENGINE = InnoDB;
+CREATE INDEX aspnet_Paths_index ON aspnet_Paths(ApplicationId, LoweredPath);
+
+CREATE TABLE IF NOT EXISTS `aspnet_PersonalizationAllUsers` (
+	PathId binary(255) NOT NULL,
+	PageSettings blob NOT NULL,
+	LastUpdatedDate DATETIME NOT NULL,
+PRIMARY KEY (`PathId`),
+FOREIGN KEY (PathId) REFERENCES aspnet_Paths(PathId)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `aspnet_PersonalizationPerUser` (
+	Id binary(255) NOT NULL,
+	PathId binary(255) NOT NULL,
+	UserId binary(255) NOT NULL,
+	PageSettings blob NOT NULL,
+	LastUpdatedDate DATETIME NOT NULL,
+PRIMARY KEY (`Id`),
+FOREIGN KEY (PathId) REFERENCES aspnet_Paths(PathId),
+FOREIGN KEY (UserId) REFERENCES aspnet_Users(UserId)
+) ENGINE = InnoDB;
+CREATE INDEX aspnet_PersonalizationPerUser_index1 ON aspnet_PersonalizationPerUser(PathId,UserId);
+CREATE INDEX aspnet_PersonalizationPerUser_ncindex2 ON aspnet_PersonalizationPerUser(UserId,PathId);
+
+INSERT INTO aspnet_schemaversions (Feature, CompatibleSchemaVersion, IsCurrentVersion) VALUES ('common', '1', 1);
+INSERT INTO aspnet_schemaversions (Feature, CompatibleSchemaVersion, IsCurrentVersion) VALUES ('membership', '1', 1);
+INSERT INTO aspnet_schemaversions (Feature, CompatibleSchemaVersion, IsCurrentVersion) VALUES ('role manager', '1', 1);
+INSERT INTO aspnet_schemaversions (Feature, CompatibleSchemaVersion, IsCurrentVersion) VALUES ('profile', '1', 1);
+INSERT INTO aspnet_schemaversions (Feature, CompatibleSchemaVersion, IsCurrentVersion) VALUES ('personalization', '1', 1);
