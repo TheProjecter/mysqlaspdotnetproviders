@@ -1,5 +1,0 @@
-C:\Development\MySql.Providers\MySql.Providers\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\MySql.Providers\MySql.Providers\bin\Debug\MySql.Providers.dll
-C:\Development\MySql.Providers\MySql.Providers\bin\Debug\MySql.Providers.pdb
-C:\Development\MySql.Providers\MySql.Providers\obj\Debug\MySql.Providers.dll
-C:\Development\MySql.Providers\MySql.Providers\obj\Debug\MySql.Providers.pdb
