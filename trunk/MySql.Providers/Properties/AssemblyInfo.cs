@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MySql.Providers")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Gannett")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MySql.Providers")]
-[assembly: AssemblyCopyright("Copyright © Gannett 2008")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

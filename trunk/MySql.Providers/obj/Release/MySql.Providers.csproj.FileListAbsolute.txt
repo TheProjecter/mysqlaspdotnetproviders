@@ -8,3 +8,8 @@ C:\Development\MySql.Providers\MySql.Providers\obj\Release\MySql.Providers.dll
 C:\Development\MySql.Providers\MySql.Providers\bin\Release\MySql.Providers.dll
 C:\Development\MySql.Providers\MySql.Providers\bin\Release\MySql.Providers.pdb
 C:\Development\MySql.Providers\MySql.Providers\obj\Release\MySql.Providers.pdb
+C:\Development\Test\trunk\MySql.Providers\bin\Release\MySql.Providers.dll
+C:\Development\Test\trunk\MySql.Providers\bin\Release\MySql.Providers.pdb
+C:\Development\Test\trunk\MySql.Providers\obj\Release\ResolveAssemblyReference.cache
+C:\Development\Test\trunk\MySql.Providers\obj\Release\MySql.Providers.dll
+C:\Development\Test\trunk\MySql.Providers\obj\Release\MySql.Providers.pdb
